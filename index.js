@@ -14,8 +14,7 @@ const app = express();
 
 app.get('/sum', (req, res) => {
   // res.send('Hello Express!');
-  const a = req.query.a;
-  const b = req.query.b;
+  const {a, b} = req.query;
 
   if(!a) {
     return res.status(400).send('Please provide a');
@@ -37,3 +36,11 @@ app.get('/sum', (req, res) => {
 app.listen(8000, () => {
   console.log('Express server is listening on port 8000!');
 });
+
+//drill 2
+
+app.get('/cipher', (req, res) => {
+  let {text , shift} = req.query;
+
+  
+}
