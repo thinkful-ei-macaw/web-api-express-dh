@@ -40,7 +40,48 @@ app.listen(8000, () => {
 //drill 2
 
 app.get('/cipher', (req, res) => {
-  let {text , shift} = req.query;
+  const {text , shift} = req.query;
 
-  
-}
+  if(!text){
+    return res
+    .status(400)
+    .send('text required');
+  }
+
+  if(!shift){
+    return res
+    .status(400)
+    .send('shift required');
+  }
+  const shiftKey = typeof('number');
+
+  if(typeof(shiftKey)==='number'){
+    return res
+    .status(400)
+    .send('numerical value required');
+
+  }
+  const base = 'A'.charCodeAt(0);  
+
+  const cipher = text
+    .toUpperCase()
+    .split('') 
+    .map(char => { 
+      const code = char.charCodeAt(0); 
+      if(code < base || code > (base + 26)) {
+        return char;
+      }
+      let diff = code - base;
+      diff = diff + shiftKey; 
+    
+      diff = diff % 26;
+      
+      const shiftedChar = String.fromCharCode(base + diff);
+      return shiftedChar;
+    })
+    .join(''); 
+  res
+    .status(200)
+    .send(cipher);  
+});
+
